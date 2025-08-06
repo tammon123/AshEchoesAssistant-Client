@@ -2,7 +2,7 @@
 	import "@/utils/init.js"
 	// #ifdef WEB
 	import {
-		versionApi
+		versionApi,loginStatusApi
 	} from "@/myapi/ashEchoes.js"
 	import {
 		useSystemStore
@@ -22,6 +22,9 @@
 					location.reload(true)
 				}
 			})
+			if(uni.guser.getId()) {
+				loginStatusApi(uni.guser.getId(),()=>{})
+			}
 			this.$nextTick(() => {
 				const su = new StorageUtils()
 				if (param.query.nav) {

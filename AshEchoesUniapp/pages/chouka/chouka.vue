@@ -48,10 +48,10 @@
 						<view class="ch-center-item ch-item ch-item-line">
 							<view class="chi-top">
 								<view class="chit-title item">角色</view>
-								<view class="item value-item">{{charsInfo['0'].rate}}</view>
-								<view class="item value-item">{{charsInfo['0'].avg+'抽'}}</view>
-								<view class="item value-item">{{charsInfo['0'].tr}}</view>
-								<view class="item value-item">{{charsInfo['0'].pj+'抽'}}</view>
+								<view class="item value-item">{{charsInfo['0'].rate||0}}</view>
+								<view class="item value-item">{{charsInfo['0'].avg||0+'抽'}}</view>
+								<view class="item value-item">{{charsInfo['0'].tr||0}}</view>
+								<view class="item value-item">{{charsInfo['0'].pj||0+'抽'}}</view>
 								<view class="item">综合概率</view>
 								<view class="item">每6星角色</view>
 								<view class="item">不歪率</view>
@@ -59,23 +59,23 @@
 							</view>
 							<view class="chi-bottom">
 								<view class="item">总抽数:</view>
-								<view class="item">{{charsInfo['0'].size}}抽</view>
+								<view class="item">{{charsInfo['0'].size||0}}抽</view>
 								<view class="item">6星:</view>
-								<view class="item">{{charsInfo['0'].r6count}}个</view>
+								<view class="item">{{charsInfo['0'].r6count||0}}个</view>
 								<view class="item">|</view>
 								<view class="item">UP抽数:</view>
-								<view class="item">{{charsInfo['0'].r6xdtotal}}抽</view>
+								<view class="item">{{charsInfo['0'].r6xdtotal||0}}抽</view>
 								<view class="item">6星:</view>
-								<view class="item">{{charsInfo['0'].r6xdcount}}个</view>
+								<view class="item">{{charsInfo['0'].r6xdcount||0}}个</view>
 							</view>
 						</view>
 						<view class="ch-bottom-item ch-item-line ch-item">
 							<view class="chi-top">
 								<view class="chit-title item">烙痕</view>
-								<view class="item value-item">{{charsInfo['1'].rate}}</view>
-								<view class="item value-item">{{charsInfo['1'].avg+'抽'}}</view>
-								<view class="item value-item">{{charsInfo['1'].tr}}</view>
-								<view class="item value-item">{{charsInfo['1'].pj+'抽'}}</view>
+								<view class="item value-item">{{charsInfo['1'].rate||0}}</view>
+								<view class="item value-item">{{charsInfo['1'].avg||0+'抽'}}</view>
+								<view class="item value-item">{{charsInfo['1'].tr||0}}</view>
+								<view class="item value-item">{{charsInfo['1'].pj||0+'抽'}}</view>
 								<view class="item">综合概率</view>
 								<view class="item">每SSR烙痕</view>
 								<view class="item">不歪率</view>
@@ -83,21 +83,21 @@
 							</view>
 							<view class="chi-bottom">
 								<view class="item">总抽数:</view>
-								<view class="item">{{charsInfo['1'].size}}抽</view>
+								<view class="item">{{charsInfo['1'].size||0}}抽</view>
 								<view class="item">SSR:</view>
-								<view class="item">{{charsInfo['1'].r6count}}个</view>
+								<view class="item">{{charsInfo['1'].r6count||0}}个</view>
 								<view class="item">|</view>
 								<view class="item">UP抽数:</view>
-								<view class="item">{{charsInfo['1'].r6xdtotal}}抽</view>
+								<view class="item">{{charsInfo['1'].r6xdtotal||0}}抽</view>
 								<view class="item">SSR:</view>
-								<view class="item">{{charsInfo['1'].r6xdcount}}个</view>
+								<view class="item">{{charsInfo['1'].r6xdcount||0}}个</view>
 							</view>
 						</view>
 					</view>
 					<view class="chouka-nav">
 						<view class="cn-left">
 							<span class='cn-title cn-lleft'
-								:style="showRanks?{}:{'borderBottomColor':'#dce1e5'}">排行榜</span>
+								:style="showRanks?{}:{'borderBottomColor':'#dce1e5'}"><span @click="changeRankType" class="pdrm-cancel">{{rankType?'当期':'总览'}}</span>排行榜</span>
 							<span class="cn-char cn-btn" :class="showRanks&&showRankType==0?'active-cn-btn':''"
 								:style="showRanks&&showRankType==0?{'borderBottom':'4rpx solid #3366fd'}:{}"
 								@click='changeShowRanks(0)'>角色</span>
@@ -121,7 +121,7 @@
 									class='pdrm-cancel'>{{currentChoukaType=='卡池'?'总览':'卡池'}}</span>模式
 							</p>
 							<p class='pdrm-top'>
-								可<span class='pdrm-notice'>左右滑动</span>下方导航栏，<span class='pdrm-notice'>查看更多卡池</span>
+								可<span class='pdrm-notice'>左右滑动</span>下方导航栏，<span class='pdrm-cancel' style="text-decoration: none;">查看更多卡池</span>
 							</p>
 						</view>
 						<view v-if="!detailPage" class="content-bottom">
@@ -140,8 +140,7 @@
 											{{title}}
 										</view>
 										<view class="cci-bottom" v-if="index==0 && poolShowInfo.dian">
-											<view class="left-avatar"
-												:class="isCharPool?'':'memory-avatar'">
+											<view class="left-avatar" :class="isCharPool?'':'memory-avatar'">
 												<img class='left-avatar-img lai-unkown'
 													src="https://r.qianqiu.info/chouka/unkown.jpg" mode='heightFix'
 													alt="">
@@ -159,8 +158,7 @@
 											</view>
 										</view>
 										<view class="cci-bottom" v-for="item in itemPoolDataArr[title].arr">
-											<view class="left-avatar"
-												:class="isCharPool?'':'memory-avatar'">
+											<view class="left-avatar" :class="isCharPool?'':'memory-avatar'">
 												<img class='left-avatar-img' :src="item.avatar" mode='heightFix' alt="">
 											</view>
 											<view class="progress-box">
@@ -199,8 +197,7 @@
 											</view>
 										</view>
 										<view class="cci-bottom" v-if="item.info.dian">
-											<view class="left-avatar"
-												:class="isCharPool?'':'memory-avatar'">
+											<view class="left-avatar" :class="isCharPool?'':'memory-avatar'">
 												<img class='left-avatar-img lai-unkown'
 													src="https://r.qianqiu.info/chouka/unkown.jpg" mode='heightFix'
 													alt="">
@@ -218,8 +215,7 @@
 											</view>
 										</view>
 										<view class="cci-bottom" v-for="recor in item.ui">
-											<view class="left-avatar"
-												:class="isCharPool?'':'memory-avatar'">
+											<view class="left-avatar" :class="isCharPool?'':'memory-avatar'">
 												<img class='left-avatar-img' :src="recor.avatar" mode='heightFix'
 													alt="">
 											</view>
@@ -281,7 +277,7 @@
 							</p>
 							<template v-if="rankMine!=0">
 								<p class='pdrm-top'>在<span
-										class='pdrm-notice'>{{poolSortType[currentSortType].n}}</span>榜单<span
+										class='pdrm-notice'>{{poolSortType[currentSortType].n}}</span>{{rankType?'当期':'总览'}}榜单<span
 										class='pdrm-notice'>{{pdrSort==1?poolSortType[0].nn:poolSortType[0].n}}</span>中，您的排名为：<span
 										class='pdrm-notice'>{{rankMine}}</span>
 								</p>
@@ -468,7 +464,15 @@
 	}
 
 	let showRankType = ref(0)
-
+	let rankType = ref(1)
+	function changeRankType() {
+		if(rankType.value == 0) {
+			rankType.value = 1
+		}else {
+			rankType.value = 0
+		}
+		sureRank()
+	}
 	function changeShowRanks(v) {
 		if (allow == 0) {
 			dialog.value.open()
@@ -505,7 +509,7 @@
 	}
 	let beh = "tAvg"
 	let pdrSort = ref(1)
-	let minCount = ref(1000)
+	let minCount = ref(1)
 	let allow = 0
 
 	watch(() => minCount.value, (n, o) => {
@@ -560,6 +564,7 @@
 			page,
 			size,
 			beh,
+			rankType: rankType.value,
 			type: showRankType.value,
 			sort: pdrSort.value,
 			count: minCount.value || 0
@@ -721,7 +726,7 @@
 		name: "寻迹潜航/先觉潜航",
 		index: 3
 	}, {
-		name: "识海甄录·消夏归航",
+		name: "识海甄录",
 		index: 6
 	}, ]
 
@@ -979,6 +984,17 @@
 		transform: translateX(-50%);
 		min-height: 100%;
 		box-sizing: border-box;
+	}
+	
+	.pdrm-cancel {
+		font-size: 28rpx;
+		font-weight: 600;
+		color: #3366fd;
+		text-decoration: underline;
+	}
+	
+	.pdrm-cancel:hover {
+		cursor: pointer;
 	}
 
 	.chouka-n-body {
@@ -1280,16 +1296,10 @@
 					}
 				}
 
-				.pdrm-cancel {
-					font-size: 28rpx;
-					font-weight: 600;
-					color: #3366fd;
-				}
+				
 
 				.pdrm-bottom {
 					font-size: 24rpx;
-
-
 				}
 			}
 

@@ -923,6 +923,9 @@
 							if(hignLevelSwitch.value.s4 && jj.origin=='卡池') {
 								jj.count = 6
 							}
+							if(jj.rank == "SR" && jj.origin!='大月卡') {
+								jj.count = 6
+							}
 						}
 						allMemorys = mergedAllMemorys;
 						

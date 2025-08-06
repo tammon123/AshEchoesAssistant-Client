@@ -12,6 +12,9 @@ let user = new User
 export function versionApi(suc) {
 	uni.req("h5/v", {}, suc, () => {})
 }
+export function loginStatusApi(id,suc) {
+	uni.req("user/ls/"+id, {}, suc, () => {})
+}
 
 export function getAppVersionApi(suc) {
 	uni.req("app/v", {}, suc, () => {})
@@ -185,7 +188,7 @@ export function postPoolDataApi(data, token, suc, fail) {
 //出货率tRate  up出货率uTr   平均抽数tAvg   up平均抽数uAvg
 export function getPagePoolDataRankApi(data, suc, fail) {
 	uni.req("poolrank/" + data.type + "/" + data.page + "/" + data.size + "/" + data.sort + "/" + data.count + "/" +
-		data.beh + "/" + user.getId(), {}, suc, fail)
+		data.beh + "/" + user.getId()+"/"+data.rankType, {}, suc, fail)
 }
 export function agreeRankApi(suc, fail) {
 	uni.req("pool/rank/agree/" + user.getId(), {}, suc, fail)
