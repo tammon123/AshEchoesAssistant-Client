@@ -29,6 +29,32 @@
 			<view class="share-c-bottom">
 				<view class="char">
 					<view class="char-title-line">
+						<view class="scb-c-title">衍铸</view>
+					</view>
+					<view class="char-box">
+						<template v-for="(item, index) in leaderExt" :key='index'>
+							<view class="card-line">
+								<view @longpress="charToWikiDetail(item.name)"
+									@contextmenu.prevent="charToWikiDetail(item.name)" class="char-card"
+									v-if="(sharePage && item.avatar) || !sharePage">
+									<img @click.stop='handleDeleteMemberPre(index)' class='rab-delete-icon'
+										v-if="item.avatar && !sharePage"
+										src="https://r.qianqiu.info/app/icons/delete.png" mode='aspectFill' alt="">
+									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar" alt=""
+										class="avatar">
+									<img @click='openCharSelect(index, true)' v-else src="/static/icons/upload.png"
+										mode='aspectFill' alt="点击选择队员" class="avatar">
+									<view class="name"
+										:style="item.element?{color: element[item.element].fcolor}:{color:'white'}">
+										{{item.name?item.name:index==0?'衍铸队长':index+1+'号位'}}
+									</view>
+								</view>
+							</view>
+						</template>
+					</view>
+				</view>
+				<view class="char">
+					<view class="char-title-line">
 						<view class="scb-c-title">同调者</view>
 						<view v-if="!sharePage" class='chareq-title'><span>潜像编辑</span><uv-switch activeColor='#3c9cff'
 								v-model="charEqEdit" size="20"></uv-switch></view>
@@ -137,6 +163,32 @@
 				</view>
 			</view>
 			<view class="share-c-bottom">
+				<view class="char">
+					<view class="char-title-line">
+						<view class="scb-c-title">衍铸</view>
+					</view>
+					<view class="char-box">
+						<template v-for="(item, index) in leaderExt" :key='index'>
+							<view class="card-line">
+								<view @longpress="charToWikiDetail(item.name)"
+									@contextmenu.prevent="charToWikiDetail(item.name)" class="char-card"
+									v-if="(sharePage && item.avatar) || !sharePage">
+									<img @click.stop='handleDeleteMemberPre(index)' class='rab-delete-icon'
+										v-if="item.avatar && !sharePage"
+										src="https://r.qianqiu.info/app/icons/delete.png" mode='aspectFill' alt="">
+									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar" alt=""
+										class="avatar">
+									<img @click='openCharSelect(index, true)' v-else src="/static/icons/upload.png"
+										mode='aspectFill' alt="点击选择队员" class="avatar">
+									<view class="name"
+										:style="item.element?{color: element[item.element].fcolor}:{color:'white'}">
+										{{item.name?item.name:index==0?'衍铸队长':index+1+'号位'}}
+									</view>
+								</view>
+							</view>
+						</template>
+					</view>
+				</view>
 				<view class="char">
 					<view class="scb-c-title">同调者</view>
 					<view class="char-box">
@@ -338,9 +390,9 @@
 				</view>
 			</view>
 			<view class="right">
-				<!-- <view class="submit-btn btn-tg" @click="handleClickToCompute">
+				<view class="submit-btn btn-tg" @click="handleClickToCompute">
 					<span class='btn1-name'>前往计算</span>
-				</view> -->
+				</view>
 				<view v-if='!sharePage' class="submit-btn " @click="handleClickTougao">
 					<img mode='aspectFill' class='calc' src="/static/icons/tg.png" alt="">
 					<span class='btn1-name'>{{modify==1?'修改':"投稿"}}</span>
@@ -409,6 +461,7 @@
 	const likes = ref(0)
 	const toast = ref()
 	const chars = ref([{}, {}, {}, {}, {}, {}, {}, {}])
+	const leaderExt = ref([{name:''}])
 	const memorys = ref([{}, {}, {}, {}, {}, {}])
 	const skills = ref([{}, {}, {}, {}])
 	const ccardId = ref(0)
@@ -420,6 +473,9 @@
 				data.value.remark = r.remark
 				data.value.nickname = r.nickname
 				likes.value = r.likes
+				if(r.leaderE) {
+					leaderExt.value[0] = r.leaderE
+				}
 				// if (ree.modify == 1) {
 				data.value.nickname = r.nickname.split('-')[0]
 				// }
@@ -518,10 +574,11 @@
 	const ecurrent = ref("全元素")
 	const rcurrent = ref("全职业")
 	const rankCurrent = ref(0)
-
-	function openCharSelect(index) {
+	let cLeaderExt = false
+	function openCharSelect(index, ccleaderExt) {
 		if (sharePage.value) return
 		indexCurrent.value = index
+		cLeaderExt = ccleaderExt
 		memberPopup.value.open()
 	}
 	//筛选职业
@@ -556,6 +613,11 @@
 	})
 
 	function handleChooseMember(v) {
+		if(cLeaderExt) {
+			leaderExt.value[0] = v
+			memberPopup.value.close()
+			return
+		}
 		let oCharIndex = -1;
 		let nCharIndex = indexCurrent.value;
 		for (let i = 0; i < chars.value.length; i++) {
@@ -1017,6 +1079,7 @@
 			return
 		}
 		data.value.uid = data.value.uid || uni.guser.getId()
+		let leaderExtName = leaderExt.value[0].name
 		let charNames = ""
 		for (let j of chars.value) {
 			if (j.characterId && j.characterId > 1000) {
@@ -1108,6 +1171,7 @@
 		}
 		if (chareqsChoose.value)
 			data.value.charNames = charNames.substring(0, charNames.length - 1)
+		data.value.leaderExt = leaderExtName
 		data.value.memoryNames = memoryNames.substring(0, memoryNames.length - 1)
 		data.value.spskills = sspskills.substring(0, sspskills.length - 1)
 		data.value.sp2skills = sp2skills.substring(0, sp2skills.length - 1)

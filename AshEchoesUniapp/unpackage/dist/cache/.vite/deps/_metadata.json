@@ -2,7 +2,14 @@
   "hash": "b9c22b9c",
   "configHash": "cc5f64e1",
   "lockfileHash": "ff5eaf67",
-  "browserHash": "b622c441",
-  "optimized": {},
+  "browserHash": "dd807661",
+  "optimized": {
+    "html2canvas": {
+      "src": "../../../../../node_modules/html2canvas/dist/html2canvas.esm.js",
+      "file": "html2canvas.js",
+      "fileHash": "206769df",
+      "needsInterop": false
+    }
+  },
   "chunks": {}
 }

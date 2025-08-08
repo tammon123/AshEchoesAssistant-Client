@@ -38,6 +38,8 @@
 					<view class="pdcbl-center">
 						<p class='pdc-c-line'>说明：<span class='bold desc'>{{item.remark}}</span>
 						</p>
+						<p class='pdc-c-line'>衍铸：<span class='bold char'
+								:style="{'color':!item.leaderExt?'red':''}">{{item.leaderExt || "未配置"}}</span></p>
 						<p class='pdc-c-line'>角色：<span class='bold char' v-for="(i, j) in item.charNames.split(',')"
 								:style="{'color':chooseChar.name==i?'red':''}">{{i+" "}}</span></p>
 						<p class='pdc-c-line'>烙痕：<span class='bold memory'
