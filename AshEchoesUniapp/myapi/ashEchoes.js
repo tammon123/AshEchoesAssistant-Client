@@ -75,6 +75,9 @@ export function userPswEmailSendApi(data, suc, fail) {
 		method: "POST"
 	})
 }
+export function genAuthCodeApi(uid, suc, fail) {
+	uni.req("auth/"+uid, {}, suc, fail)
+}
 export function userFindPswApi(data, suc, fail) {
 	uni.req("user/psw/find", data, suc, fail, {
 		method: "POST"

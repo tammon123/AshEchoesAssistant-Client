@@ -175,6 +175,13 @@
 						<p class='input-title'>显示昵称</p>
 						<uv-input :customStyle="{'borderColor': 'black !important'}" placeholder="请在这里输入小助手的显示昵称"
 							shape="square" color='black' v-model="data.nickname"></uv-input>
+						<uv-input :customStyle="{'borderColor': 'black !important','marginTop':'10px'}"
+							placeholder="请点击右侧按钮生成授权码" shape="square" color='black' v-model="authCode">
+							<template v-slot:suffix>
+								<uv-code ref="uCode" seconds="600"></uv-code>
+								<uv-button @click="genAuthCode" text="生成授权码" type="success" size="mini"></uv-button>
+							</template>
+						</uv-input>
 					</template>
 				</view>
 				<view class="input-box" v-if="findAccountPsw">
@@ -428,6 +435,7 @@
 	import {
 		userPostApi,
 		userModifyApi,
+		genAuthCodeApi,
 		userFindPswApi,
 		userPswEmailSendApi
 	} from "@/myapi/ashEchoes.js"
@@ -485,8 +493,34 @@
 	}
 
 	const uCode = ref(null)
+	const authCode = ref("")
 	const codeText = ref("发送验证码")
 	const findAccountPsw = ref(false)
+
+	function genAuthCode() {
+		toast.value.show({
+			type: 'loading',
+			title: '请等待',
+			message: "请等待",
+			duration: 30000,
+			overlay: false
+		})
+		genAuthCodeApi(uid.value, (r) => {
+			toast.value.show({
+				type: 'default',
+				message: '请复制该授权码使用',
+				overlay: false
+			})
+			console.log(r)
+			authCode.value = r
+		}, (e) => {
+			toast.value.show({
+				type: 'default',
+				message: e,
+				overlay: false
+			})
+		})
+	}
 
 	function uCodeChange(v) {
 		codeText.value = v
