@@ -39,7 +39,7 @@
 								<view class="uid">{{(uid&&uid.length>=13)?'小助手ID：'+uid.substring(uid.length-6):''}}
 								</view>
 							</view>
-							<view class="ct-item-right">
+							<view class="ct-item-right" v-if="!bot">
 								<view class="cir-btns">
 									<view class="import-data-btn" @click='importData'>导入:删除</view>
 								</view>
