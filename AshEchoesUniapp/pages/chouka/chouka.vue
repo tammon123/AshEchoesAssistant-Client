@@ -94,10 +94,10 @@
 							</view>
 						</view>
 					</view>
-					<view class="chouka-nav">
+					<view class="chouka-nav" v-if="!bot">
 						<view class="cn-left">
-							<span class='cn-title cn-lleft'
-								:style="showRanks?{}:{'borderBottomColor':'#dce1e5'}"><span @click="changeRankType" class="pdrm-cancel">{{rankType?'当期':'总览'}}</span>排行榜</span>
+							<span class='cn-title cn-lleft' :style="showRanks?{}:{'borderBottomColor':'#dce1e5'}"><span
+									@click="changeRankType" class="pdrm-cancel">{{rankType?'当期':'总览'}}</span>排行榜</span>
 							<span class="cn-char cn-btn" :class="showRanks&&showRankType==0?'active-cn-btn':''"
 								:style="showRanks&&showRankType==0?{'borderBottom':'4rpx solid #3366fd'}:{}"
 								@click='changeShowRanks(0)'>角色</span>
@@ -114,14 +114,15 @@
 					</view>
 
 					<template v-if="!showRanks">
-						<view class="pdr-msg">
+						<view class="pdr-msg" v-if="!bot">
 							<p class='pdrm-top'>当前UP池为<span
 									class='pdrm-notice'>{{currentChoukaType=='卡池'?'卡池':'总览'}}</span>模式,点击切换<span
 									@click="changeChoukaType"
 									class='pdrm-cancel'>{{currentChoukaType=='卡池'?'总览':'卡池'}}</span>模式
 							</p>
 							<p class='pdrm-top'>
-								可<span class='pdrm-notice'>左右滑动</span>下方导航栏，<span class='pdrm-cancel' style="text-decoration: none;">查看更多卡池</span>
+								可<span class='pdrm-notice'>左右滑动</span>下方导航栏，<span class='pdrm-cancel'
+									style="text-decoration: none;">查看更多卡池</span>
 							</p>
 						</view>
 						<view v-if="!detailPage" class="content-bottom">
@@ -254,7 +255,7 @@
 									</view>
 								</template>
 							</view>
-							<view class='detail-content'>
+							<view class='detail-content' v-if="!bot">
 								<template v-for="(i, index) in Object.keys(allDetailData)" :key='i'>
 									<view :class="('cc'+index)" v-if="allDetailData[i].t == currentDetailTypeIndex"
 										class="detail-card" :style="i==currentChooseDetailItem?{color:'red'}:{}">
@@ -465,14 +466,16 @@
 
 	let showRankType = ref(0)
 	let rankType = ref(1)
+
 	function changeRankType() {
-		if(rankType.value == 0) {
+		if (rankType.value == 0) {
 			rankType.value = 1
-		}else {
+		} else {
 			rankType.value = 0
 		}
 		sureRank()
 	}
+
 	function changeShowRanks(v) {
 		if (allow == 0) {
 			dialog.value.open()
@@ -739,6 +742,7 @@
 
 	function showAllPoolData() {
 		let type = poolType[currentPoolTypeIndex.value].index
+		console.log(type)
 		let c = 0
 		if (type == 1 || type == 5 || type == 3) {
 			limitL.value = 28
@@ -927,6 +931,7 @@
 			r[1].avg = divideAndRound(r[1].size, r[1].r6count)
 			charsInfo.value = r
 			allow = r.allow
+			chooseBotView()
 		}, e => {
 			toast.value.show({
 				type: 'default',
@@ -935,9 +940,12 @@
 			})
 		})
 	}
-
+	const bot = ref(false)
 	onMounted(() => {
 		let id = uni.guser.getId()
+		if (uni.guser.getBot()) {
+			bot.value = true
+		}
 		pageHeight.value = uni.getSystemInfoSync().screenHeight
 		pageWidth.value = uni.getSystemInfoSync().screenWidth
 		if (!id) {
@@ -953,9 +961,41 @@
 		getPoolAllApi(r => {
 			realPoolDataArr.value = r
 			initPoolDataUserInfo()
-			showAllPoolData()
+
 		})
 	})
+
+	function chooseBotView() {
+		const search = window.location.search
+		if (search.indexOf("bot=1") != -1) {
+			if (search.indexOf("pool=") != -1) {
+				// pool参数参考poolType
+				if (search.indexOf("pool=0") != -1) {
+					currentPoolTypeIndex.value = 0
+				} else if (search.indexOf("pool=1") != -1) {
+					currentPoolTypeIndex.value = 1
+				} else if (search.indexOf("pool=2") != -1) {
+					currentPoolTypeIndex.value = 2
+				} else if (search.indexOf("pool=3") != -1) {
+					currentPoolTypeIndex.value = 3
+				} else if (search.indexOf("pool=4") != -1) {
+					currentPoolTypeIndex.value = 4
+				} else if (search.indexOf("pool=6") != -1) {
+					currentPoolTypeIndex.value = 6
+				}
+				showAllPoolData()
+			}else if(search.indexOf("total=") != -1) {
+				changePoolDetail()
+				if(search.indexOf("total=0") != -1){
+					currentDetailTypeIndex.value = 0
+				}else if(search.indexOf("total=1") != -1){
+					currentDetailTypeIndex.value = 1
+				}
+			}
+		} else {
+			showAllPoolData()
+		}
+	}
 	import {
 		useSystemStore
 	} from "@/stores/SystemStore.js"
@@ -985,14 +1025,14 @@
 		min-height: 100%;
 		box-sizing: border-box;
 	}
-	
+
 	.pdrm-cancel {
 		font-size: 28rpx;
 		font-weight: 600;
 		color: #3366fd;
 		text-decoration: underline;
 	}
-	
+
 	.pdrm-cancel:hover {
 		cursor: pointer;
 	}
@@ -1296,7 +1336,7 @@
 					}
 				}
 
-				
+
 
 				.pdrm-bottom {
 					font-size: 24rpx;

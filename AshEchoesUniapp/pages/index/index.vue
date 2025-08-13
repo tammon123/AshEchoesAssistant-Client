@@ -505,13 +505,12 @@
 			duration: 30000,
 			overlay: false
 		})
-		genAuthCodeApi(uid.value, (r) => {
+		genAuthCodeApi(uni.guser.getId(), (r) => {
 			toast.value.show({
 				type: 'default',
 				message: '请复制该授权码使用',
 				overlay: false
 			})
-			console.log(r)
 			authCode.value = r
 		}, (e) => {
 			toast.value.show({
