@@ -983,6 +983,7 @@
 				} else if (search.indexOf("pool=5") != -1) {
 					currentPoolTypeIndex.value = 5
 				}
+				currentChoukaType.value = "总览"
 				showAllPoolData()
 			}else if(search.indexOf("total=") != -1) {
 				changePoolDetail()
