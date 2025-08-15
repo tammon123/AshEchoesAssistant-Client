@@ -26,14 +26,6 @@ class User {
     getPhone() {
         return uni.su.get(LOGIN_PHONE) || ''
     }
-	
-	setBot(value) {
-	    uni.su.set("BOT", value, 1)
-	}
-	
-	getBot() {
-	    return uni.su.get("BOT") || ''
-	}
 
     setId(value) {
         uni.su.set(LOGIN_ID, value, CACHE_EXPIRE_TIME)
@@ -69,7 +61,6 @@ class User {
 		uni.su.remove(AVATAR)
 		uni.su.remove(NICKNAME)
 		uni.su.remove(ACCOUNT)
-		uni.su.remove("BOT")
 	}
 
 

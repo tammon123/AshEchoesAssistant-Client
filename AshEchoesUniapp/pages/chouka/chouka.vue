@@ -1,17 +1,19 @@
 <template>
 	<view class="chouka-total-body" id='parant-body'>
 		// #ifdef WEB
-		<TopNavBar child='true'></TopNavBar>
+		<template v-if="!bot">
+			<TopNavBar child='true'></TopNavBar>
+		</template>
 		// #endif
 
 		<view class='chouka-n-body' :style="{'min-height': pageHeight+'px'}">
 			// #ifdef WEB
-			<view class="blan">&nbsp;</view>
+			<view v-if="!bot" class="blan">&nbsp;</view>
 			// #endif
 			<view class="chouka-content">
 				<template v-if="isLogin">
 					<view class="content-head">
-						<view class="ch-top-item ch-item">
+						<view v-if="!bot" class="ch-top-item ch-item">
 							<template v-if="pdrSort==1 && currentSortType != 5">
 								<template v-if="currentSortType==1 || currentSortType==3">
 									<img v-if="rankMine&& rankMine <= 10" mode='heightFix' class='cti-img'
@@ -125,8 +127,8 @@
 									style="text-decoration: none;">查看更多卡池</span>
 							</p>
 						</view>
-						<view v-if="!detailPage" class="content-bottom">
-							<view class="cb-tabs cb-new-tabs">
+						<view v-if="!detailPage" class="content-bottom" :style="bot?{'marginBottom':'0'}:{}">
+							<view v-if="!bot" class="cb-tabs cb-new-tabs">
 								<view
 									:class="currentPoolTypeIndex==index?'cb-tab-item-active cb-tab-item':'cb-tab-item'"
 									:key='index' @click="poolTypeChange(item, index)" v-for="(item, index) in poolType">
@@ -236,8 +238,8 @@
 								</template>
 							</view>
 						</view>
-						<view v-if="detailPage" class="content-bottom">
-							<view class="cb-tabs cb-new-tabs" style="grid-template-columns: repeat(2, 1fr);">
+						<view v-if="detailPage" class="content-bottom" :style="bot?{'marginBottom':'0'}:{}">
+							<view v-if="!bot" class="cb-tabs cb-new-tabs" style="grid-template-columns: repeat(2, 1fr);">
 								<view
 									:class="currentDetailTypeIndex==index?'cb-tab-item-active cb-tab-item':'cb-tab-item'"
 									:key='index' @click="currentDetailTypeIndex = item.index"
@@ -742,7 +744,6 @@
 
 	function showAllPoolData() {
 		let type = poolType[currentPoolTypeIndex.value].index
-		console.log(type)
 		let c = 0
 		if (type == 1 || type == 5 || type == 3) {
 			limitL.value = 28
@@ -943,7 +944,7 @@
 	const bot = ref(false)
 	onMounted(() => {
 		let id = uni.guser.getId()
-		if (uni.guser.getBot()) {
+		if (window.location.search.indexOf("bot=1") != -1) {
 			bot.value = true
 		}
 		pageHeight.value = uni.getSystemInfoSync().screenHeight
@@ -985,11 +986,11 @@
 				}
 				currentChoukaType.value = "总览"
 				showAllPoolData()
-			}else if(search.indexOf("total=") != -1) {
+			} else if (search.indexOf("total=") != -1) {
 				changePoolDetail()
-				if(search.indexOf("total=0") != -1){
+				if (search.indexOf("total=0") != -1) {
 					currentDetailTypeIndex.value = 0
-				}else if(search.indexOf("total=1") != -1){
+				} else if (search.indexOf("total=1") != -1) {
 					currentDetailTypeIndex.value = 1
 				}
 			}

@@ -24,9 +24,6 @@
 			})
 			if(param.query.uid) {
 				uni.guser.setId(param.query.uid)
-				if(param.query.bot) {
-					uni.guser.setBot("1")
-				}
 			}
 			if(uni.guser.getId()) {
 				loginStatusApi(uni.guser.getId(),()=>{})
