@@ -2,7 +2,7 @@
 	import "@/utils/init.js"
 	// #ifdef WEB
 	import {
-		versionApi,loginStatusApi
+		versionApi,loginStatusApi,wikiSearchApi
 	} from "@/myapi/ashEchoes.js"
 	import {
 		useSystemStore
@@ -13,6 +13,12 @@
 	// #endif
 	export default {
 		onLaunch: function(param) {
+			if(window.location.pathname == '/search') {
+				wikiSearchApi(param.query.k,(r=>{
+					console.log(r)
+					window.location.replace(r)
+				}))
+			}
 			// #ifdef WEB
 			versionApi((r) => {
 				const vk = "version-ae"
@@ -22,6 +28,7 @@
 					location.reload(true)
 				}
 			})
+			
 			if(param.query.uid) {
 				uni.guser.setId(param.query.uid)
 			}

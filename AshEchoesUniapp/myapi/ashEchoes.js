@@ -15,6 +15,9 @@ export function versionApi(suc) {
 export function loginStatusApi(id,suc) {
 	uni.req("user/ls/"+id, {}, suc, () => {})
 }
+export function wikiSearchApi(id,suc) {
+	uni.req('bot/wiki/search/'+id,{},suc,()=>{})
+}
 
 export function getAppVersionApi(suc) {
 	uni.req("app/v", {}, suc, () => {})
