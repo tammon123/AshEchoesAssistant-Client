@@ -5,6 +5,50 @@
 
 		<meta charset="UTF-8" />
 		<script>
+			if (window.location.pathname === '/search') {
+				console.log('检测到搜索页面，准备执行搜索重定向...');
+				if (window.location.search.indexOf("k=") != -1) {
+					let id = window.location.search.split("=")[1]
+					var apiUrl = '/api/bot/wiki/search/' + encodeURIComponent(id);
+					var xhr = new XMLHttpRequest();
+					// 配置请求
+					xhr.open('GET', apiUrl, true);
+					xhr.setRequestHeader('Accept', 'application/json');
+
+					// 处理响应
+					xhr.onreadystatechange = function() {
+						if (xhr.readyState === 4) { // 请求完成
+							if (xhr.status === 200) { // 成功响应
+								try {
+									var response = JSON.parse(xhr.responseText);
+									if (response && response.data) {
+										console.log('获取到重定向URL:', response.data);
+										// 立即重定向
+										window.location.replace(response.data);
+									} else {
+										throw new Error('响应格式不正确');
+									}
+								} catch (e) {
+									console.error('解析响应失败:', e);
+									showError('服务器返回的数据格式不正确');
+								}
+							} else {
+								console.error('API请求失败:', xhr.status);
+								showError('搜索请求失败，状态码: ' + xhr.status);
+							}
+						}
+					};
+					// 处理错误
+					xhr.onerror = function() {
+						console.error('网络请求错误');
+					};
+
+					// 发送请求
+					xhr.send();
+				}
+			}
+		</script>
+		<script>
 			var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
 				CSS.supports('top: constant(a)'))
 			document.write(
@@ -14,7 +58,7 @@
 		<title>AshEchoes</title>
 		<!--preload-links-->
 		<!--app-context-->
-		<script type="module" crossorigin src="/assets/index-BiMG69Dj.js"></script>
+		<script type="module" crossorigin src="/assets/index-C2bMriSE.js"></script>
 		<link rel="stylesheet" crossorigin href="/assets/index-fSd2bbuO.css">
 	</head>
 	<body>

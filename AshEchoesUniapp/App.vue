@@ -13,12 +13,12 @@
 	// #endif
 	export default {
 		onLaunch: function(param) {
-			if(window.location.pathname == '/search') {
-				wikiSearchApi(param.query.k,(r=>{
-					console.log(r)
-					window.location.replace(r)
-				}))
-			}
+			// if(window.location.pathname == '/search') {
+			// 	wikiSearchApi(param.query.k,(r=>{
+			// 		console.log(r)
+			// 		window.location.replace(r)
+			// 	}))
+			// }
 			// #ifdef WEB
 			versionApi((r) => {
 				const vk = "version-ae"
