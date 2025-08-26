@@ -239,7 +239,8 @@
 							</view>
 						</view>
 						<view v-if="detailPage" class="content-bottom" :style="bot?{'marginBottom':'0'}:{}">
-							<view v-if="!bot" class="cb-tabs cb-new-tabs" style="grid-template-columns: repeat(2, 1fr);">
+							<view v-if="!bot" class="cb-tabs cb-new-tabs"
+								style="grid-template-columns: repeat(2, 1fr);">
 								<view
 									:class="currentDetailTypeIndex==index?'cb-tab-item-active cb-tab-item':'cb-tab-item'"
 									:key='index' @click="currentDetailTypeIndex = item.index"
@@ -962,7 +963,6 @@
 		getPoolAllApi(r => {
 			realPoolDataArr.value = r
 			initPoolDataUserInfo()
-
 		})
 	})
 
@@ -1615,6 +1615,14 @@
 							padding: 10rpx 0;
 							height: 70rpx;
 							line-height: 40rpx;
+
+							.llt-top {
+								white-space: nowrap;
+								/* 不换行 */
+								overflow: hidden;
+								/* 超出隐藏 */
+								text-overflow: ellipsis;
+							}
 						}
 
 						.cci-bottom {

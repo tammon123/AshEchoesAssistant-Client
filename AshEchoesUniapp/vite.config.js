@@ -10,8 +10,8 @@ export default defineConfig({
 		open: false,
 		proxy: {
 			'/api': {
-				// target: 'http://192.168.100.102:8765/',
-				target: 'https://bjhl.qianqiu.info/api/',
+				target: 'http://192.168.100.102:8765/',
+				// target: 'https://bjhl.qianqiu.info/api/',
 				// target: 'http://localhost:8765/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, '')

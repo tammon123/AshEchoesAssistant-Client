@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<script>
-			if (window.location.pathname === '/search') {
+			if (window.location.pathname === '/s' || window.location.pathname === '/search') {
 				console.log('检测到搜索页面，准备执行搜索重定向...');
 				if (window.location.search.indexOf("k=") != -1) {
 					let id = window.location.search.split("=")[1]

@@ -136,7 +136,6 @@
 			<!-- #endif -->
 			<!-- #ifdef WEB-->
 			<view class="copyright">
-				<p>Copyright © 2024 AES ALL RIGHTS RESERVED.</p>
 				<p>京ICP备2024086401号-1</p>
 			</view>
 			<!-- #endif -->
