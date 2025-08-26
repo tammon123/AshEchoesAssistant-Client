@@ -3,7 +3,7 @@
 		<view @click='toAppImportPage' v-if="isApp" class="app-import-icon" id='importBtn'>
 			<img class='import-icon' mode='heightFix' src="https://r.qianqiu.info/app/icons/import1.png" alt="">
 		</view>
-		<view class='top-navbar-body'>
+		<view class='top-navbar-body' v-if="showMainPage">
 			<view class='head_title-new'>
 				<view class="top">
 					<img class='logo' mode="heightFix" src='https://r.qianqiu.info/app/logo.png' alt="" />
@@ -24,49 +24,49 @@
 		<uv-toast ref='toast'></uv-toast>
 		<view class="index-content">
 			<view class='head'>
-				<view class="head-card" @click="toChouka">
+				<view class="head-card" @click="toChouka" v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/21.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">抽卡分析</view>
 				</view>
-				<view class="head-card" @click="toMore">
+				<view class="head-card" @click="toMore" v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/2.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">配队助手</view>
 				</view>
-				<view class="head-card" @click="toRank">
+				<view class="head-card" @click="toRank" v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/12.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">伤害计算</view>
 				</view>
-				<view class="head-card" @click='toArticle'>
+				<view class="head-card" @click='toArticle' v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/4.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">萌新攻略</view>
 				</view>
-				<view class="head-card" @click="toStory">
+				<view class="head-card" @click="toStory" v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/22.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">剧情线</view>
 				</view>
-				<view class="head-card" @click="toMd">
+				<view class="head-card" @click="toMd" v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/11.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">监督刻印</view>
 				</view>
-				<view class="head-card" @click='toWikiChar'>
+				<view class="head-card" @click='toWikiChar' v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/7.png" alt="" class="card-img">
 					</view>
 					<view class="hci-title">同调者</view>
 				</view>
-				<view class="head-card" @click='toWikiMemory'>
+				<view class="head-card" @click='toWikiMemory' v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/8.png" alt="" class="card-img">
 					</view>
@@ -78,7 +78,7 @@
 					</view>
 					<view class="hci-title">更新日志</view>
 				</view>
-				<view class="head-card" @click='toSuggest'>
+				<view class="head-card" @click='toSuggest' v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/6.png" alt="" class="card-img">
 					</view>
@@ -90,7 +90,7 @@
 					</view>
 					<view class="hci-title">致谢</view>
 				</view>
-				<view class="head-card" @click='toWait'>
+				<view class="head-card" @click='toWait' v-if="showMainPage">
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/17.png" alt="" class="card-img">
 					</view>
@@ -761,6 +761,9 @@
 		}
 		// #endif
 	}
+	
+	const showMainPage = ref(true)
+	
 	import {
 		useSystemStore
 	} from "@/stores/SystemStore.js"
@@ -779,7 +782,11 @@
 			if (typeof(recorder) == 'object') {
 				isApp.value = true
 			}
+			if(window.location.host == 's.qianqiu.info') {
+				showMainPage.value = false
+			}
 		})
+		
 	})
 
 	function toAppImportPage() {
