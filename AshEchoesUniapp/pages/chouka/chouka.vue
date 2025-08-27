@@ -353,14 +353,23 @@
 				</template>
 			</view>
 			<uv-toast position="top" ref='toast'></uv-toast>
-			<uv-popup closeable mode='top' ref="modal" customStyle="height: 900rpx;">
+			<uv-popup closeable mode='top' ref="modal" customStyle="height: 1300rpx;">
 				<view class="slot-content">
 					<uv-textarea maxlength="-1" height='400rpx' v-model="content"
 						placeholder='{"ret":0,"iRet":0,"sMsg":"ok","jData":{"iRet":"0","sMsg":"ok","token":"6666666666666666666666b12f236430f4c23b08b57055384b4b2f75816ff784bc8175b7d5ecb066"},"sAmsSerial":"AMS-BJHL-1014193510-mBbXFq-666158-323819"}'></uv-textarea>
 					<view class="tips">
-						请检查在链接2中得到的数据是否和上方示例格式<span style='color:red'>一致</span>。
-						<br>如果不一致，请在同一个环境<span style='color:red'>(手机QQ、手机微信、PC浏览器)</span>打开链接1登录，成功后打开链接2获取数据。
-						<br>导入教程可点击<a href="https://mp.weixin.qq.com/s/GkHZ3tHSvitb7JU2A2hXjA">《导入教程》</a>查看
+						<p>链接1：<a target="_blank" style="font-weight: 600;font-size: 28rpx;" href="https://seed.qq.com/act/a20240905record/index.html">白荆回廊官方登录页面</a></p>
+						<br>
+						<p>链接2：<a target="_blank" style="font-weight: 600;font-size: 28rpx;" href="https://comm.ams.game.qq.com/ide/?iChartId=323819&iSubChartId=323819&sIdeToken=cVlzqU">Token获取</a></p>
+						<br>
+						<p>抽卡数据导入教程：<a style="font-weight: 600;font-size: 28rpx;" target="_blank" href="https://mp.weixin.qq.com/s/GkHZ3tHSvitb7JU2A2hXjA">《导入教程》</a></p>
+						<br>
+						<p>请在手机QQ检查在链接2中得到的数据是否和上方示例格式<span class='red'>一致</span>。</p>
+						<br>
+						<p>如果不一致，请在同一个环境<span class='red'>(手机QQ、手机微信、PC浏览器)</span>打开链接1登录，成功后打开链接2获取数据。</p>
+						<br>
+						<p>如果之前已经<span class='red'>导入过抽卡数据且无误</span>。请<span class='red'>不要点击</span>删除按钮，删除后会从<span class='red'>2024/01/12号开始</span>导入数据，数据量大的情况下会<span class='red'>很慢</span>。小助手支持从最后一次导入数据的时间<span class='red'>增量更新</span>。</p>
+						<br>
 					</view>
 					<view class="btns">
 						<view class="btn cancelBtn" @click="cancel">取消</view>
@@ -369,9 +378,9 @@
 					</view>
 				</view>
 			</uv-popup>
-			<uv-popup closeable mode='top' ref="deletee" customStyle="height: 400rpx">
+			<uv-popup closeable mode='top' ref="deletee" customStyle="height: 500rpx">
 				<view class="slot-content">
-					<view class='delete-text'>删除所有数据并准备重新导入数据,是否要提交删除申请？</view>
+					<view class='delete-text'>如果之前已经<span class='red'>导入过抽卡数据且无误</span>。请<span class='red'>不要点击</span>删除按钮，删除后会从<span class='red'>2024/01/12号开始</span>导入数据，数据量大的情况下会<span class='red'>很慢</span>。小助手支持从最后一次导入数据的时间<span class='red'>增量更新</span>。</view>
 					<view class="btns">
 						<view class="btn cancelBtn" @click='sureDelete'>确认</view>
 						<view class="btn surebtn" @click="deletec">点错了</view>
@@ -1016,6 +1025,11 @@
 	::v-deep .uv-toast__content {
 		position: fixed;
 		top: 200rpx !important;
+	}
+	
+	.red {
+		font-weight: 600;
+		color: red;
 	}
 
 	.chouka-total-body {
