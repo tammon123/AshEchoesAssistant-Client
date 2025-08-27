@@ -3,7 +3,7 @@
 		<view @click='toAppImportPage' v-if="isApp" class="app-import-icon" id='importBtn'>
 			<img class='import-icon' mode='heightFix' src="https://r.qianqiu.info/app/icons/import1.png" alt="">
 		</view>
-		<view class='top-navbar-body' v-if="showMainPage">
+		<view class='top-navbar-body' >
 			<view class='head_title-new'>
 				<view class="top">
 					<img class='logo' mode="heightFix" src='https://r.qianqiu.info/app/logo.png' alt="" />
@@ -24,7 +24,7 @@
 		<uv-toast ref='toast'></uv-toast>
 		<view class="index-content">
 			<view class='head'>
-				<view class="head-card" @click="toChouka" v-if="showMainPage">
+				<view class="head-card" @click="toChouka" >
 					<view class="img-box">
 						<img mode="heightFix" src="https://r.qianqiu.info/app/index/21.png" alt="" class="card-img">
 					</view>
@@ -863,7 +863,7 @@
 			grid-template-columns: repeat(3, 1fr);
 			gap: 20rpx;
 			/* #ifdef WEB */
-			grid-template-rows: repeat(2, 1fr);
+			/* grid-template-rows: repeat(2, 1fr); */
 			/* #endif */
 			margin-top: 30rpx;
 			padding-bottom: 20rpx;

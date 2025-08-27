@@ -40,8 +40,8 @@
 									<img @click.stop='handleDeleteMemberPre(index)' class='rab-delete-icon'
 										v-if="item.avatar && !sharePage"
 										src="https://r.qianqiu.info/app/icons/delete.png" mode='aspectFill' alt="">
-									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar" alt=""
-										class="avatar">
+									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar"
+										alt="" class="avatar">
 									<img @click='openCharSelect(index, true)' v-else src="/static/icons/upload.png"
 										mode='aspectFill' alt="点击选择队员" class="avatar">
 									<view class="name"
@@ -176,8 +176,8 @@
 									<img @click.stop='handleDeleteMemberPre(index)' class='rab-delete-icon'
 										v-if="item.avatar && !sharePage"
 										src="https://r.qianqiu.info/app/icons/delete.png" mode='aspectFill' alt="">
-									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar" alt=""
-										class="avatar">
+									<img @click='openCharSelect(index, true)' v-if="item.avatar" :src="item.avatar"
+										alt="" class="avatar">
 									<img @click='openCharSelect(index, true)' v-else src="/static/icons/upload.png"
 										mode='aspectFill' alt="点击选择队员" class="avatar">
 									<view class="name"
@@ -254,7 +254,7 @@
 			</view>
 		</view>
 		<uv-popup mode="bottom" ref="memberPopup"
-			custom-style="height: 1100rpx;overflow:auto;background-color:#e9edef;">
+			custom-style="width:100%;height: 1100rpx;overflow:auto;background-color:#e9edef;">
 			<view class="popup-member-box">
 				<view class="role-box">
 					<view class="role-item" :style="rcurrent==item?{opacity: '1'}:{}" @click="handleChangeRole(item)"
@@ -461,7 +461,9 @@
 	const likes = ref(0)
 	const toast = ref()
 	const chars = ref([{}, {}, {}, {}, {}, {}, {}, {}])
-	const leaderExt = ref([{name:''}])
+	const leaderExt = ref([{
+		name: ''
+	}])
 	const memorys = ref([{}, {}, {}, {}, {}, {}])
 	const skills = ref([{}, {}, {}, {}])
 	const ccardId = ref(0)
@@ -473,7 +475,7 @@
 				data.value.remark = r.remark
 				data.value.nickname = r.nickname
 				likes.value = r.likes
-				if(r.leaderE) {
+				if (r.leaderE) {
 					leaderExt.value[0] = r.leaderE
 				}
 				// if (ree.modify == 1) {
@@ -575,6 +577,7 @@
 	const rcurrent = ref("全职业")
 	const rankCurrent = ref(0)
 	let cLeaderExt = false
+
 	function openCharSelect(index, ccleaderExt) {
 		if (sharePage.value) return
 		indexCurrent.value = index
@@ -613,7 +616,7 @@
 	})
 
 	function handleChooseMember(v) {
-		if(cLeaderExt) {
+		if (cLeaderExt) {
 			leaderExt.value[0] = v
 			memberPopup.value.close()
 			return
@@ -694,13 +697,13 @@
 
 	function initAllSmallSkills() {
 		getAllSmallSkillsApi((r) => {
-			
+
 			for (let jj of r) {
 				if (jj.skillId >= chareqsStart && jj.skillId <= chareqsEnd) {
 					allChareqs.value.push(jj)
 					showChareqs.value.push(jj)
 				}
-				if (jj.skillId < chareqsStart){
+				if (jj.skillId < chareqsStart) {
 					allSmallSkills.value.push(jj)
 					showSmallSkills.value.push(jj)
 				}
@@ -1704,6 +1707,8 @@
 		.popup-member-box {
 			position: relative;
 			width: 100%;
+			max-width: 750rpx;
+			left: calc(50% - 375rpx);
 			padding: 20rpx;
 			box-sizing: border-box;
 
@@ -1716,7 +1721,8 @@
 				background-color: #e9edef;
 				z-index: 999;
 				width: 100%;
-				left: 0;
+				max-width: 750rpx;
+				left: calc(50% - 375rpx);
 				top: 0;
 				padding: 20rpx;
 				box-sizing: border-box;
@@ -1783,8 +1789,9 @@
 
 		.search-box {
 			position: fixed;
-			top: -3rpx;
 			height: 200rpx;
+			max-width: 750rpx;
+			left: calc(50% - 375rpx);
 			background-color: #e9edef;
 			z-index: 1;
 		}
@@ -1792,6 +1799,8 @@
 		.popup-skill-box {
 			position: relative;
 			width: 100%;
+			max-width: 750rpx;
+			left: calc(50% - 375rpx);
 			padding: 20rpx;
 			margin-top: 200rpx;
 			box-sizing: border-box;
@@ -1824,6 +1833,8 @@
 		.popup-memory-box {
 			position: relative;
 			width: 100%;
+			max-width: 750rpx;
+			left: calc(50% - 375rpx);
 			box-sizing: border-box;
 			padding: 55rpx 20rpx 0;
 			box-sizing: border-box;
@@ -1833,6 +1844,9 @@
 				position: fixed;
 				left: 0;
 				top: 0;
+				width: 100%;
+				max-width: 750rpx;
+				left: calc(50% - 375rpx);
 				background-color: #e9edef;
 				z-index: 999;
 
@@ -1843,6 +1857,8 @@
 					gap: 20rpx;
 					font-size: 20rpx;
 					width: 100%;
+					max-width: 750rpx;
+					left: calc(50% - 375rpx);
 					padding: 20rpx;
 					box-sizing: border-box;
 
